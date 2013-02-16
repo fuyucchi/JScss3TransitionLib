@@ -1,5 +1,7 @@
 /* ----------------
-モバイル用 css3transition ライブラリー(独自
+モバイル用 css3transition ライブラリー
+setPositionX(targetElm, posX)
+setTransX(targetElm, targetPosX, easeType, callback)
 2013/2/11
 ---------------- */
 
@@ -13,7 +15,6 @@ var css3transX = {
 	},
 	
 	param:{
-
 	},
 	
 	init:function(){
@@ -25,29 +26,30 @@ var css3transX = {
 		t.css3SupportNum = (!!document.uniqueID)? 3:t.css3SupportNum;// IE10 以上用 Transitionで tramsform3d が使える。
 		
 		var attr = ["transition","transform"];
+		var w = 'webkit';
 		for(var i = 0;i<2; i++){
+			var a = attr[i];
 			if(t.css3SupportNum > 0 && t.css3SupportNum <3){
-				t.param[i] = "webkit" + attr[i].charAt(0).toUpperCase() + attr[i].slice(1);
-				attr[i] ="-webkit-"+ attr[i];// for webkit
-				//t.param[i] = $.camelCase(attr[i]);// depend jQuery
+				t.param[i] = w + a.charAt(0).toUpperCase() + a.slice(1);
+				attr[i] ="-" + w + "-" + a;// for webkit
 				if(i<1){
-					t.param[6] = 'webkitTransitionEnd';//for Webkit
+					t.param[6] = w + 'TransitionEnd';//for WebkitEvent
 				}
 				
 			}else{
 				t.param[i] = attr[i];
 				if(i<1){
-					t.param[6] = 'transitionend';//for mozzila or IE10upper
+					t.param[6] = a + 'end';//Event for mozzila or IE10upper
 				}
 			}
-			t.param[i+2] = attr[i];//
+			t.param[i+2] = a;//
 		}//END for
 
-		if(t.css3SupportNum %2 !=0){
-			t.param[4] = 'translate(';
+		if(t.css3SupportNum % 2 ! = 0){
+			t.param[4] = 'translate(';//2d
 			t.param[5] = 'px, 0)';
 		}else{
-			t.param[4] = 'translateX(';
+			t.param[4] = 'translateX(';//3d
 			t.param[5] = 'px)';
 		}
 
@@ -67,7 +69,7 @@ var css3transX = {
 		
 		targetElm.one(t.param[6], function(e){// depend jQuery
 			elm.style.removeProperty(t.param[2]);//rest animation
-			callback;
+			callback();
 		});
 	}
 
