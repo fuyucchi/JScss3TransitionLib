@@ -27,7 +27,7 @@ var css3transX = {
 		var attr = ["transition","transform"];
 		for(var i = 0;i<2; i++){
 			if(t.css3SupportNum > 0 && t.css3SupportNum <3){
-				t.param[i] = "webkit" + attr[i];
+				t.param[i] = "webkit" + attr[i].charAt(0).toUpperCase() + attr[i].slice(1);
 				attr[i] ="-webkit-"+ attr[i];// for webkit
 				//t.param[i] = $.camelCase(attr[i]);// depend jQuery
 				if(i<1){
