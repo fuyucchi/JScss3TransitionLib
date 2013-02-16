@@ -45,7 +45,7 @@ var css3transX = {
 			t.param[i+2] = a;//
 		}//END for
 
-		if(t.css3SupportNum % 2 ! = 0){
+		if(t.css3SupportNum % 2 != 0){
 			t.param[4] = 'translate(';//2d
 			t.param[5] = 'px, 0)';
 		}else{
