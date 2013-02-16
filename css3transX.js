@@ -59,7 +59,7 @@ var css3transX = {
 		elm.style[t.param[1]] = t.param[4] + posX + t.param[5];
 	},
 	
-	setTransX:function(targetElm, targetPosX, easeType){//easeArrayはあらかじめ決めて書いておく
+	setTransX:function(targetElm, targetPosX, easeType, callback){//easeArrayはあらかじめ決めて書いておく
 		var t = this;
 		var elm = targetElm[0];
 		elm.style[t.param[0]] = t.param[3] + t.easeArray[easeType];
@@ -67,6 +67,7 @@ var css3transX = {
 		
 		targetElm.one(t.param[6], function(e){// depend jQuery
 			elm.style.removeProperty(t.param[2]);//rest animation
+			callback;
 		});
 	}
 
