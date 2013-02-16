@@ -31,7 +31,7 @@ var css3transX = {
 			var a = attr[i];
 			if(t.css3SupportNum > 0 && t.css3SupportNum <3){
 				t.param[i] = w + a.charAt(0).toUpperCase() + a.slice(1);
-				attr[i] ="-" + w + "-" + a;// for webkit
+				a = "-" + w + "-" + a;// for webkit
 				if(i<1){
 					t.param[6] = w + 'TransitionEnd';//for WebkitEvent
 				}
