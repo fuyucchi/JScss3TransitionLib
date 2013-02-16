@@ -19,14 +19,14 @@ var css3transX = {
 	
 	init:function(){
 		var t = this;
+		var w = 'webkit';
 		var _ua = navigator.userAgent.toLowerCase();
-		t.css3SupportNum = ( _ua.indexOf('webkit') > 0 )? 1:0;// 0の場合は、非webkitブラウザ (主にmozilla)
+		t.css3SupportNum = ( _ua.indexOf(w) > 0 )? 1:0;// 0の場合は、非webkitブラウザ (主にmozilla)
 		// transform3d(Webkit) check BASE=2 (iOS6)
 		t.css3SupportNum = ('WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix())? 2:t.css3SupportNum;
 		t.css3SupportNum = (!!document.uniqueID)? 3:t.css3SupportNum;// IE10 以上用 Transitionで tramsform3d が使える。
 		
 		var attr = ["transition","transform"];
-		var w = 'webkit';
 		for(var i = 0;i<2; i++){
 			var a = attr[i];
 			if(t.css3SupportNum > 0 && t.css3SupportNum <3){
@@ -37,7 +37,7 @@ var css3transX = {
 				}
 				
 			}else{
-				t.param[i] = attr[i];
+				t.param[i] = a;
 				if(i<1){
 					t.param[6] = a + 'end';//Event for mozzila or IE10upper
 				}
