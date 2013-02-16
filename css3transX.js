@@ -55,7 +55,7 @@ var css3transX = {
 	setPositionX:function(targetElm, posX){
 		var t = this;
 		var elm = targetElm[0];
-		elm.style.removeProperty(t.param[0]);//rest animation
+		elm.style.removeProperty(t.param[2]);//rest animation
 		elm.style[t.param[1]] = t.param[4] + posX + t.param[5];
 	},
 	
@@ -66,7 +66,7 @@ var css3transX = {
 		elm.style[t.param[1]] = t.param[4] + targetPosX + t.param[5];
 		
 		targetElm.one(t.param[6], function(e){// depend jQuery
-			elm.style.removeProperty(t.param[0]);//rest animation
+			elm.style.removeProperty(t.param[2]);//rest animation
 		});
 	}
 
