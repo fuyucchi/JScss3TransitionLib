@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="utf-8" />
+<title> css3 ライブラリー確認ページ</title>
+
+
+<link href="test.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 9]>
+   <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<![endif]–->
+<!--[if gte IE 9]><-->
+    <!--<script src="http://code.jquery.com/jquery-2.0.0b1.min.js"></script>-->
+    <script src="/js/jq2.js"></script>
+<![endif]-->
+<script src="/js/jqplugin/jquery.easie-min.js"></script>
+
+
+<!-- <script src="https://raw.github.com/fuyucchi/JScss3TransitionLib/master/css3transX.js"></script> -->
+<script src="css3transXmin.js"></script>
+
+</head>
+<body>
+
+<article id="cc">
+	<p>css3 transition (HW)</p>
+	<div id="result">判定</div>
+	<button id="c-start">START</button>
+	<button id="c-stop">STOP</button>
+	
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+		<li>7</li>
+		<li>8</li>
+		<li>9</li>
+				<li>10</li>
+						<li>11</li>
+												<li>12</li>
+																		<li>13</li>
+																								<li>14</li>
+	</ul>
+</article>
+
+<hr />
+
+<article id="jq">
+<p>Jqueryが頑張っています $().animate({left: targetPos, 1000, 'easieEaseInOutQuint', function(){…</p>
+<button id="j-start">START</button>
+<button id="j-stop">STOP</button>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+		<li>7</li>
+		<li>8</li>
+		<li>9</li>
+				<li>10</li>
+						<li>11</li>
+												<li>12</li>
+																		<li>13</li>
+																								<li>14</li>
+	</ul>
+</article>
+</body>
+
+<script>
+$(function() {//--------------------
+
+var cssList = $('li', '#cc');
+var targetPosN = 800;
+css3transX.easeArray[1] = ' 3000ms cubic-bezier(0.770, 0.000, 0.175, 1.000)';//add
+
+//css3transX.easeArray[1] = ' 600ms cubic-bezier(0, .4, .36, 1)';
+var ccArray = [];
+
+	$('#c-start').click(function(){
+		
+		cssList.each(function(index){
+			ccArray[index] = targetPosN;
+			var tt = $(this);
+			//console.log($(this));
+			//setTimeout(function(){runloopCC(tt, index);}, index * 0);
+			runloopCC(tt, index);
+			});
+	});//End click
+
+	var tq = this;
+	function runloopCC(targetJQobj, index){
+		css3transX.setTransX(targetJQobj, ccArray[index] , 1, function(){
+/*
+			if(ccArray[index] != targetPosN){
+				ccArray[index] = targetPosN;
+			}else{
+				ccArray[index] = 0;
+			}
+*/
+			ccArray[index] = 0;
+
+			css3transX.setTransX(targetJQobj, ccArray[index] , 1, function(){testtest(targetJQobj, index);}/*runloopCC(targetJQobj,ccArray[index])*/ );
+	});
+
+		
+		//targetJQobj.animate({'left':ccArray[index] },1500, 'easieEaseInOutQuint', function(){
+
+			//$(this).animate({'left':ccArray[index]},1500,'easieEaseInOutQuint', runloopCC($(this), index) );
+		//});//animation
+
+	}//EnD func
+	
+	function testtest(a,i){
+		ccArray[i] = 800;
+		runloopCC(a,i);
+	}
+
+	$('#c-stop').click(function(){
+		cssList.each(function(index){
+			css3transX.resetPositionX( $(this), 0);
+		});
+		//moveingList.each(function(){$(this).stop();});
+	});
+
+
+
+	
+var moveingList = $('li','#jq');
+var jqArray = [];
+var targetPos = "800px";
+
+	$('#j-start').click(function(){
+		
+		moveingList.each(function(index){
+			jqArray[index] = targetPos;
+			$(this).delay(index * 0);
+			runloop($(this), index);
+			});
+	});//End click
+	
+
+	function runloop(targetJQobj, index){
+	 	//jqArray[index] = targetPos;
+
+		targetJQobj.animate({'left':jqArray[index]},3000, 'easieEaseInOutQuint', function(){
+
+			if(jqArray[index] !=targetPos){
+				jqArray[index] = targetPos;
+			}else{
+				jqArray[index] = 0;
+			}
+
+			//jqArray[index] = 0;
+
+			$(':animated', this).animate({'left':jqArray[index]},3000,'easieEaseInOutQuint', runloop($(this), index) );
+		});
+
+	}//EnD func
+
+
+	$('#j-stop').click(function(){
+		moveingList.stop();
+		//moveingList.each(function(){$(this).stop();});
+	});
+	
+	
+});//End DOM ready
+
+</script>
+
+
+
+
+
+
+
+</html>
