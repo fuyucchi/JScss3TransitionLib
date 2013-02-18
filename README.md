@@ -7,6 +7,6 @@ css3 Animation transition (HardWare Acceleration) Wrapper for Mobile
 
 - Sample HTML TEST DEMO
 
- [ performance demo ](http;//visiblic.com:8080/work_som/)
+ [ performance demo ](http://visiblic.com:8080/work_som/)
 
 - How to use
