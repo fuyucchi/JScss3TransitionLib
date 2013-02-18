@@ -168,7 +168,10 @@ var targetPos = "800px";
 		moveingList.stop();
 		//moveingList.each(function(){$(this).stop();});
 	});
-	
+
+	if(css3transX.css3SupportNum == 2 || css3transX.css3SupportNum == 4){
+		$('#result').text(navigator.userAgent + " ハードウエアアクセラレーションが有効と判定して、制御しております。");
+	}
 	
 });//End DOM ready
 
