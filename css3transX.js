@@ -1,7 +1,8 @@
 /* ----------------
 モバイル用 css3transition ライブラリー
-setPositionX(targetElm, posX)
-setTransX(targetElm, targetPosX, easeType, callback)
+setPositionX(targetElm, posX, percent)
+resetPositionX(targetElm, posX, percent)
+setTransX(targetElm, targetPosX, easeType, callback, percent)
 2013/2/11
 ---------------- */
 
@@ -33,13 +34,13 @@ var css3transX = {
 				t.param[i] = w + a.charAt(0).toUpperCase() + a.slice(1);
 				a = "-" + w + "-" + a;// for webkit
 				if(i<1){
-					t.param[6] = w + 'TransitionEnd';//for WebkitEvent
+					t.param[7] = w + 'TransitionEnd';//for WebkitEvent
 				}
 				
 			}else{
 				t.param[i] = a;
 				if(i<1){
-					t.param[6] = a + 'end';//Event for mozzila or IE10upper
+					t.param[7] = a + 'end';//Event for mozzila or IE10upper
 				}
 			}
 			t.param[i+2] = a;//
@@ -48,26 +49,32 @@ var css3transX = {
 		if(t.css3SupportNum % 2 != 0){
 			t.param[4] = 'translate(';//2d
 			t.param[5] = 'px, 0)';
+			t.param[6] = '%, 0)';
 		}else{
 			t.param[4] = 'translateX(';//3d
 			t.param[5] = 'px)';
+			t.param[6] = '%)';
 		}
 
 	},
-	setPositionX:function(targetElm, posX){
+	setPositionX:function(targetElm, posX, percentFlag){
+		targetElm[0].style[this.param[1]] = this.param[4] + posX + this.param[5+percentFlag];
+	},
+	resetPositionX:function(targetElm, posX, percentFlag){
 		var t = this;
 		var elm = targetElm[0];
 		elm.style.removeProperty(t.param[2]);//rest animation
-		elm.style[t.param[1]] = t.param[4] + posX + t.param[5];
+		elm.style[t.param[1]] = t.param[4] + posX + t.param[5+percentFlag];//transform reset
+		elm.style['left'] = posX + (percentFlag)? "%":"px";// strong reflesh
 	},
 	
-	setTransX:function(targetElm, targetPosX, easeType, callback){//easeArrayはあらかじめ決めて書いておく
+	setTransX:function(targetElm, targetPosX, easeType, callback, percentFlag){//easeArrayはあらかじめ決めて書いておく
 		var t = this;
 		var elm = targetElm[0];
 		elm.style[t.param[0]] = t.param[3] + t.easeArray[easeType];
-		elm.style[t.param[1]] = t.param[4] + targetPosX + t.param[5];
+		elm.style[t.param[1]] = t.param[4] + targetPosX + t.param[5+percentFlag];
 		
-		targetElm.one(t.param[6], function(e){// depend jQuery
+		targetElm.one(t.param[7], function(e){// depend jQuery
 			elm.style.removeProperty(t.param[2]);//rest animation
 			callback();
 		});
