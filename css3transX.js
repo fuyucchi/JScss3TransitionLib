@@ -51,9 +51,9 @@ var css3transX = {
 			t.param[5] = 'px, 0)';
 			t.param[6] = '%, 0)';
 		}else{
-			t.param[4] = 'translateX(';//3d
-			t.param[5] = 'px)';
-			t.param[6] = '%)';
+			t.param[4] = 'translate3d(';//3d
+			t.param[5] = 'px,0,0)';
+			t.param[6] = '%,0,0)';
 		}
 
 	},
@@ -65,7 +65,6 @@ var css3transX = {
 		var elm = targetElm[0];
 		elm.style.removeProperty(t.param[2]);//rest animation
 		elm.style[t.param[1]] = t.param[4] + posX + t.param[5+percentFlag];//transform reset
-		elm.style['left'] = posX + (percentFlag)? "%":"px";// strong reflesh
 	},
 	
 	setTransX:function(targetElm, targetPosX, easeType, callback, percentFlag){//easeArrayはあらかじめ決めて書いておく
